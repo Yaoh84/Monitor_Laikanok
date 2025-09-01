@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <title>ราคาทองวันนี้</title>
+    <style>
+        body { font-family: Arial; text-align: center; margin-top: 100px; }
+        h1 { color: goldenrod; }
+        #price { font-size: 2em; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>ราคาทองวันนี้</h1>
+    <div id="price">กำลังโหลด...</div>
+
+    <script>
+        async function fetchGoldPrice() {
+            try {
+                //
+                const response = await fetch('https://api.chnwt.dev/thai-gold-api/latest');
+                const data = await response.json();
+
+                //
+                document.getElementById('price').textContent = `ทองคำ 96.5%: ${data.price.toLocaleString()} บาท/บาททองคำ`;
+            } catch (err) {
+                document.getElementById('price').textContent = 'ไม่สามารถโหลดข้อมูลได้';
+                console.error(err);
+            }
+        }
+
+        //
+        fetchGoldPrice();
+
+        //
+        setInterval(fetchGoldPrice, 3600000);
+    </script>
+</body>
+</html>
